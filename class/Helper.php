@@ -1,6 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Subscriptions;
+
+use RuntimeException;
+use XoopsDatabaseFactory;
+use XoopsMySQLDatabase;
+use XoopsObjectHandler;
+use XoopsPersistableObjectHandler;
+
+use function dirname;
 
 /*
  * You may not change or alter any portion of this comment or credits
@@ -15,14 +25,15 @@ namespace XoopsModules\Subscriptions;
 /**
  * @copyright    XOOPS Project (https://xoops.org)
  * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
- * @package
+ *
  * @since
+ *
  * @author       XOOPS Development Team
  */
-//defined('XOOPS_ROOT_PATH') || die('Restricted access');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class Helper
+ * Class Helper.
  */
 class Helper extends \Xmf\Module\Helper
 {
@@ -33,8 +44,8 @@ class Helper extends \Xmf\Module\Helper
      */
     public function __construct($debug = false)
     {
-        $this->debug   = $debug;
-        $moduleDirName = \basename(\dirname(__DIR__));
+        $this->debug = $debug;
+        $moduleDirName = basename(dirname(__DIR__));
         parent::__construct($moduleDirName);
     }
 
@@ -62,24 +73,25 @@ class Helper extends \Xmf\Module\Helper
     }
 
     /**
-     * Get an Object Handler
+     * Get an Object Handler.
      *
      * @param string $name name of handler to load
      *
-     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
+     * @return bool|XoopsObjectHandler|XoopsPersistableObjectHandler
      */
     public function getHandler($name)
     {
         $ret = null;
 
-        $class = __NAMESPACE__ . '\\' . \ucfirst($name) . 'Handler';
-        if (!\class_exists($class)) {
-            throw new \RuntimeException("Class '$class' not found");
+        $class = __NAMESPACE__ . '\\' . ucfirst($name) . 'Handler';
+        if (! class_exists($class)) {
+            throw new RuntimeException("Class '{$class}' not found");
         }
-        /** @var \XoopsMySQLDatabase $db */
-        $db  = \XoopsDatabaseFactory::getDatabaseConnection();
+        /** @var XoopsMySQLDatabase $db */
+        $db = XoopsDatabaseFactory::getDatabaseConnection();
         $ret = new $class($db);
-        $this->addLog("Getting handler '$name'");
+        $this->addLog("Getting handler '{$name}'");
+
         return $ret;
     }
 }

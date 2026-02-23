@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace XoopsModules\Subscriptions\Common;
 
@@ -25,17 +27,20 @@ namespace XoopsModules\Subscriptions\Common;
  *
  * @copyright  XOOPS Project (https://xoops.org)
  * @license    GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
- * @package    subscriptions
  */
 
+use Criteria;
+use CriteriaCompo;
+use XoopsConfigHandler;
 use XoopsModules\Subscriptions\Helper;
 
 /**
- * Class TestdataButtons
+ * Class TestdataButtons.
  */
 class TestdataButtons
 {
     private const SHOW_BUTTONS = 1;
+
     private const HIDE_BUTTONS = 0;
 
     /**
@@ -43,7 +48,6 @@ class TestdataButtons
      * Call this from admin/index.php when displaySampleButton preference is true.
      *
      * @param \Xmf\Module\Admin $adminObject
-     * @return void
      */
     public static function loadButtonConfig($adminObject): void
     {
@@ -54,7 +58,7 @@ class TestdataButtons
         // in-page "Hide" button), nothing is rendered at all.
         // The caller in admin/index.php gates this call on the same preference,
         // so this check is a defensive guard only.
-        if ((int)$helper->getConfig('displaySampleButton') !== self::SHOW_BUTTONS) {
+        if ((int) $helper->getConfig('displaySampleButton') !== self::SHOW_BUTTONS) {
             return;
         }
 
@@ -82,8 +86,6 @@ class TestdataButtons
 
     /**
      * Hide the testdata buttons by updating the module preference.
-     *
-     * @return void
      */
     public static function hideButtons(): void
     {
@@ -92,8 +94,6 @@ class TestdataButtons
 
     /**
      * Show the testdata buttons by updating the module preference.
-     *
-     * @return void
      */
     public static function showButtons(): void
     {
@@ -104,28 +104,27 @@ class TestdataButtons
      * Write the displaySampleButton preference value via the XOOPS config system.
      * Using the config handler ensures the preference page and the button stay in sync.
      *
-     * @param int $value  self::SHOW_BUTTONS or self::HIDE_BUTTONS
-     * @return void
+     * @param int $value self::SHOW_BUTTONS or self::HIDE_BUTTONS
      */
     private static function setButtonVisibility(int $value): void
     {
-        $helper   = Helper::getInstance();
-        $moduleId = (int)$helper->getModule()->getVar('mid');
+        $helper = Helper::getInstance();
+        $moduleId = (int) $helper->getModule()->getVar('mid');
 
-        /** @var \XoopsConfigHandler $configHandler */
-        $configHandler = \xoops_getHandler('Config');
+        /** @var XoopsConfigHandler $configHandler */
+        $configHandler = xoops_getHandler('Config');
 
         // Locate the specific config item by module ID + name
-        $criteria = new \CriteriaCompo(new \Criteria('conf_modid', $moduleId));
-        $criteria->add(new \Criteria('conf_name', 'displaySampleButton'));
+        $criteria = new CriteriaCompo(new Criteria('conf_modid', $moduleId));
+        $criteria->add(new Criteria('conf_name', 'displaySampleButton'));
         $configs = $configHandler->getConfigs($criteria);
 
-        if (!empty($configs)) {
-            $configItem = \reset($configs);
+        if (! empty($configs)) {
+            $configItem = reset($configs);
             $configItem->setVar('conf_value', $value);
             $configHandler->insertConfig($configItem);
         }
 
-        \redirect_header('index.php', 0, '');
+        redirect_header('index.php', 0, '');
     }
 }

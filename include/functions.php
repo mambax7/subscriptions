@@ -12,15 +12,14 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
  *
  * For all module-specific helpers use XoopsModules\Subscriptions\Utility directly.
  */
-if (!function_exists('xoops_getModuleHelper')) {
+if (! function_exists('xoops_getModuleHelper')) {
     function xoops_getModuleHelper(string $dirname)
     {
         if ($dirname === 'subscriptions') {
-            return \XoopsModules\Subscriptions\Helper::getInstance();
+            return XoopsModules\Subscriptions\Helper::getInstance();
         }
         if (class_exists('\Xmf\Module\Helper', true)) {
-            return \Xmf\Module\Helper::getHelper($dirname);
+            return Xmf\Module\Helper::getHelper($dirname);
         }
-        return null;
     }
 }
