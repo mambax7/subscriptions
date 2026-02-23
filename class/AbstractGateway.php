@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Subscriptions;
+
+use Criteria;
+
 /**
- * Subscriptions Payment Gateway abstraction
- *
- * @package    subscriptions
- * @subpackage class
+ * Subscriptions Payment Gateway abstraction.
  */
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
-
 
 /**
  * Abstract base class with shared logic for gateway implementations.
@@ -24,28 +25,34 @@ abstract class AbstractGateway implements GatewayInterface
         $this->loadConfig();
     }
 
+    public function supportsRecurring(): bool
+    {
+        return false;
+    }
+
     /**
-     * Load gateway config from the database
+     * Load gateway config from the database.
      */
     protected function loadConfig(): void
     {
         $helper = Helper::getInstance();
         $handler = $helper->getHandler('GatewayConfig');
-        if (!$handler) {
+        if (! $handler) {
             return;
         }
-        $criteria = new \Criteria('gateway', $this->getIdentifier());
-        $rows     = $handler->getAll($criteria);
+        $criteria = new Criteria('gateway', $this->getIdentifier());
+        $rows = $handler->getAll($criteria);
         foreach ($rows as $row) {
             $this->config[$row->getVar('config_key', 'n')] = $row->getVar('config_val', 'n');
         }
     }
 
     /**
-     * Get a config value
+     * Get a config value.
      *
      * @param string $key
-     * @param mixed  $default
+     * @param mixed $default
+     *
      * @return mixed
      */
     protected function getConfig(string $key, $default = null)
@@ -54,32 +61,33 @@ abstract class AbstractGateway implements GatewayInterface
     }
 
     /**
-     * Log gateway communication (non-sensitive data only)
+     * Log gateway communication (non-sensitive data only).
      *
      * @param string $message
-     * @param array  $context
+     * @param array $context
      */
     protected function log(string $message, array $context = []): void
     {
         // Write to a non-web-accessible log directory
-        $logDir  = XOOPS_VAR_PATH . '/logs/subscriptions';
-        if (!is_dir($logDir)) {
+        $logDir = XOOPS_VAR_PATH . '/logs/subscriptions';
+        if (! is_dir($logDir)) {
             @mkdir($logDir, 0750, true);
         }
         $logFile = $logDir . '/gateway_' . $this->getIdentifier() . '_' . date('Y-m-d') . '.log';
-        $entry   = date('Y-m-d H:i:s') . ' [' . $this->getIdentifier() . '] ' . $message;
-        if (!empty($context)) {
+        $entry = date('Y-m-d H:i:s') . ' [' . $this->getIdentifier() . '] ' . $message;
+        if (! empty($context)) {
             // Mask sensitive fields before logging
             $safeContext = $this->maskSensitiveData($context);
-            $entry      .= ' ' . json_encode($safeContext);
+            $entry .= ' ' . json_encode($safeContext);
         }
         @file_put_contents($logFile, $entry . PHP_EOL, FILE_APPEND | LOCK_EX);
     }
 
     /**
-     * Mask sensitive keys in context data before logging
+     * Mask sensitive keys in context data before logging.
      *
      * @param array $data
+     *
      * @return array
      */
     private function maskSensitiveData(array $data): array
@@ -90,11 +98,7 @@ abstract class AbstractGateway implements GatewayInterface
                 $data[$key] = '***REDACTED***';
             }
         }
-        return $data;
-    }
 
-    public function supportsRecurring(): bool
-    {
-        return false;
+        return $data;
     }
 }

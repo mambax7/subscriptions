@@ -4,6 +4,13 @@ declare(strict_types=1);
 
 namespace XoopsModules\Subscriptions;
 
+use RuntimeException;
+
+use function extension_loaded;
+use function function_exists;
+use function in_array;
+use function sprintf;
+
 /**
  * Cloner — recursively copies this module to a new directory,
  * replacing all occurrences of the source dirname with the target dirname.
@@ -31,8 +38,8 @@ class Cloner
         $newPath = str_replace($patKeys[0], $patValues[0], $path);
 
         if (is_dir($path)) {
-            if (!mkdir($newPath) && !is_dir($newPath)) {
-                throw new \RuntimeException(sprintf('Directory "%s" could not be created', $newPath));
+            if (! mkdir($newPath) && ! is_dir($newPath)) {
+                throw new RuntimeException(sprintf('Directory "%s" could not be created', $newPath));
             }
             $handle = opendir($path);
             if ($handle) {
@@ -64,7 +71,7 @@ class Cloner
      */
     public static function createLogo(string $dirname): bool
     {
-        if (!extension_loaded('gd')) {
+        if (! extension_loaded('gd')) {
             return false;
         }
 
@@ -73,14 +80,14 @@ class Cloner
             'imagepng', 'imagefttext', 'imagealphablending', 'imagesavealpha',
         ];
         foreach ($required as $fn) {
-            if (!function_exists($fn)) {
+            if (! function_exists($fn)) {
                 return false;
             }
         }
 
         $logoPath = $GLOBALS['xoops']->path('modules/' . $dirname . '/assets/images/logoModule.png');
         $fontPath = $GLOBALS['xoops']->path('modules/' . $dirname . '/assets/images/VeraBd.ttf');
-        if (!file_exists($logoPath) || !file_exists($fontPath)) {
+        if (! file_exists($logoPath) || ! file_exists($fontPath)) {
             return false;
         }
 
@@ -93,8 +100,8 @@ class Cloner
         imagefilledrectangle($image, 5, 35, 85, 46, $grey);
 
         // Write the new dirname centred in the same area
-        $black  = imagecolorallocate($image, 0, 0, 0);
-        $offset = (int)((80 - mb_strlen($dirname) * 6.5) / 2);
+        $black = imagecolorallocate($image, 0, 0, 0);
+        $offset = (int) ((80 - mb_strlen($dirname) * 6.5) / 2);
         imagefttext($image, 8.5, 0, $offset, 45, $black, $fontPath, ucfirst($dirname), []);
 
         imagepng($image, $logoPath);

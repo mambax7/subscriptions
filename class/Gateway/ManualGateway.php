@@ -1,13 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Subscriptions\Gateway;
+
 /**
- * Subscriptions Manual/Offline Gateway Adapter
+ * Subscriptions Manual/Offline Gateway Adapter.
  *
  * For offline or manual payment handling (bank transfer, cheque, etc.)
- *
- * @package    subscriptions
- * @subpackage class/gateway
  */
 
 defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -15,8 +15,10 @@ defined('XOOPS_ROOT_PATH') || die('Restricted access');
 use XoopsModules\Subscriptions\AbstractGateway;
 use XoopsModules\Subscriptions\Payment;
 
+use function defined;
+
 /**
- * class ManualGateway
+ * class ManualGateway.
  *
  * Allows administrators to manually confirm payments.
  * Useful for bank transfers, cheques, or other offline methods.
@@ -36,8 +38,9 @@ class ManualGateway extends AbstractGateway
     public function initiatePayment(Payment $payment, array $params = []): array
     {
         $instructions = $this->getConfig('instructions', _MD_SUBSCRIPTIONS_MANUAL_INSTRUCTIONS);
-        $paymentId    = (int)$payment->getVar('payment_id');
+        $paymentId = (int) $payment->getVar('payment_id');
         $this->log('Manual payment initiated', ['payment_id' => $paymentId]);
+
         return [
             'redirect_url' => $params['return_url'] ?? '',
             'form_fields'  => [],

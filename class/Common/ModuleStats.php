@@ -1,6 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace XoopsModules\Subscriptions\Common;
+
+use function count;
 
 /*
  You may not change or alter any portion of this comment or credits
@@ -13,7 +17,7 @@ namespace XoopsModules\Subscriptions\Common;
 */
 
 /**
- * Feedback plugin for xoops modules
+ * Feedback plugin for xoops modules.
  *
  * @copyright      XOOPS Project  (https://xoops.org)
  * @license        GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
@@ -23,15 +27,15 @@ namespace XoopsModules\Subscriptions\Common;
 trait ModuleStats
 {
     /**
-     * @param \XoopsModules\Subscriptions\Common\Configurator $configurator
+     * @param Configurator $configurator
+     *
      * @return array
      */
-
     public static function getModuleStats($configurator)
     {
         $moduleStats = [];
-        if (\count($configurator->moduleStats) > 0) {
-            foreach (\array_keys($configurator->moduleStats) as $i) {
+        if (count($configurator->moduleStats) > 0) {
+            foreach (array_keys($configurator->moduleStats) as $i) {
                 $moduleStats[$i] = $configurator->moduleStats[$i];
             }
         }

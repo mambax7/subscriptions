@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace XoopsModules\Subscriptions\Common;
 
@@ -19,68 +21,86 @@ namespace XoopsModules\Subscriptions\Common;
  */
 
 use Xmf\Module\Helper;
+use XoopsModule;
+
+use function constant;
+use function dirname;
+use function function_exists;
+use function is_string;
+use function sprintf;
+
+use const CURLOPT_HTTPHEADER;
+use const CURLOPT_RETURNTRANSFER;
+use const CURLOPT_SSL_VERIFYPEER;
+use const CURLOPT_URL;
+use const PHP_VERSION;
+use const XOOPS_VERSION;
 
 trait VersionChecks
 {
     /**
-     * Verifies XOOPS version meets minimum requirements for this module
-     * @static
-     * @param \XoopsModule|null $module
+     * Verifies XOOPS version meets minimum requirements for this module.
      *
-     * @param null|string $requiredVer
+     * @static
+     *
+     * @param XoopsModule|null $module
+     * @param string|null $requiredVer
+     *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerXoops(?\XoopsModule $module = null, ?string $requiredVer = null): bool
+    public static function checkVerXoops(?XoopsModule $module = null, ?string $requiredVer = null): bool
     {
-        $moduleDirName      = \basename(\dirname(__DIR__, 2));
-        $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
+        $moduleDirName = basename(dirname(__DIR__, 2));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (null === $module) {
-            $module = \XoopsModule::getByDirname($moduleDirName);
+            $module = XoopsModule::getByDirname($moduleDirName);
         }
-        \xoops_loadLanguage('admin', $moduleDirName);
-        \xoops_loadLanguage('common', $moduleDirName);
+        xoops_loadLanguage('admin', $moduleDirName);
+        xoops_loadLanguage('common', $moduleDirName);
 
-        //check for minimum XOOPS version
-        $currentVer = \mb_substr(\XOOPS_VERSION, 6); // get the numeric part of string
+        // check for minimum XOOPS version
+        $currentVer = mb_substr(XOOPS_VERSION, 6); // get the numeric part of string
         if (null === $requiredVer) {
-            $requiredVer = (string)$module->getInfo('min_xoops'); //making sure it's a string
+            $requiredVer = (string) $module->getInfo('min_xoops'); // making sure it's a string
         }
         $success = true;
 
-        if (\version_compare($currentVer, $requiredVer, '<')) {
+        if (version_compare($currentVer, $requiredVer, '<')) {
             $success = false;
-            $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_' . 'ERROR_BAD_XOOPS'), $requiredVer, $currentVer));
+            $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_' . 'ERROR_BAD_XOOPS'), $requiredVer, $currentVer));
         }
 
         return $success;
     }
 
     /**
-     * Verifies PHP version meets minimum requirements for this module
+     * Verifies PHP version meets minimum requirements for this module.
+     *
      * @static
-     * @param \XoopsModule|null $module
+     *
+     * @param XoopsModule|null $module
      *
      * @return bool true if meets requirements, false if not
      */
-    public static function checkVerPhp(?\XoopsModule $module = null): bool
+    public static function checkVerPhp(?XoopsModule $module = null): bool
     {
-        $moduleDirName      = \basename(\dirname(__DIR__, 2));
-        $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
+        $moduleDirName = basename(dirname(__DIR__, 2));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
         if (null === $module) {
-            $module = \XoopsModule::getByDirname($moduleDirName);
+            $module = XoopsModule::getByDirname($moduleDirName);
         }
-        \xoops_loadLanguage('admin', $moduleDirName);
-        \xoops_loadLanguage('common', $moduleDirName);
+        xoops_loadLanguage('admin', $moduleDirName);
+        xoops_loadLanguage('common', $moduleDirName);
 
         // check for minimum PHP version
         $success = true;
 
-        $verNum = \PHP_VERSION;
+        $verNum = PHP_VERSION;
         $reqVer = &$module->getInfo('min_php');
 
         if (false !== $reqVer && '' !== $reqVer) {
-            if (\version_compare($verNum, $reqVer, '<')) {
-                $module->setErrors(\sprintf(\constant('CO_' . $moduleDirNameUpper . '_' . 'ERROR_BAD_PHP'), $reqVer, $verNum));
+            if (version_compare($verNum, $reqVer, '<')) {
+                $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_' . 'ERROR_BAD_PHP'), $reqVer, $verNum));
                 $success = false;
             }
         }
@@ -89,62 +109,63 @@ trait VersionChecks
     }
 
     /**
-     * compares current module version with the latest GitHub release
-     * @static
-     * @param \Xmf\Module\Helper $helper
-     * @param string|null        $source
-     * @param string|null        $default
+     * compares current module version with the latest GitHub release.
      *
-     * @return string|array info about the latest module version, if newer
+     * @static
+     *
+     * @param Helper $helper
+     * @param string|null $source
+     * @param string|null $default
+     *
+     * @return array|string info about the latest module version, if newer
      */
-
     public static function checkVerModule(Helper $helper, ?string $source = 'github', ?string $default = 'master'): ?array
     {
-        $moduleDirName      = \basename(\dirname(__DIR__, 2));
-        $moduleDirNameUpper = \mb_strtoupper($moduleDirName);
-        $module             = $helper->getModule();
-        $update             = '';
-        $repository         = 'XoopsModules25x/' . $moduleDirName;
+        $moduleDirName = basename(dirname(__DIR__, 2));
+        $moduleDirNameUpper = mb_strtoupper($moduleDirName);
+        $module = $helper->getModule();
+        $update = '';
+        $repository = 'XoopsModules25x/' . $moduleDirName;
         //        $repository         = 'XoopsModules25x/publisher'; //for testing only
-        $ret             = null;
-        $infoReleasesUrl = "https://api.github.com/repos/$repository/releases";
+        $ret = null;
+        $infoReleasesUrl = "https://api.github.com/repos/{$repository}/releases";
         if ('github' === $source) {
-            if (\function_exists('curl_init') && false !== ($curlHandle = \curl_init())) {
-                \curl_setopt($curlHandle, \CURLOPT_URL, $infoReleasesUrl);
-                \curl_setopt($curlHandle, \CURLOPT_RETURNTRANSFER, true);
-                \curl_setopt($curlHandle, \CURLOPT_SSL_VERIFYPEER, true); //TODO: how to avoid an error when 'Peer's Certificate issuer is not recognized'
-                \curl_setopt($curlHandle, \CURLOPT_HTTPHEADER, ["User-Agent:Publisher\r\n"]);
-                $curlReturn = \curl_exec($curlHandle);
+            if (function_exists('curl_init') && false !== ($curlHandle = curl_init())) {
+                curl_setopt($curlHandle, CURLOPT_URL, $infoReleasesUrl);
+                curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
+                curl_setopt($curlHandle, CURLOPT_SSL_VERIFYPEER, true); // TODO: how to avoid an error when 'Peer's Certificate issuer is not recognized'
+                curl_setopt($curlHandle, CURLOPT_HTTPHEADER, ["User-Agent:Publisher\r\n"]);
+                $curlReturn = curl_exec($curlHandle);
                 if (false === $curlReturn) {
-                    \trigger_error(\curl_error($curlHandle));
-                } elseif (\is_string($curlReturn) && (false !== \mb_strpos($curlReturn, 'Not Found'))) {
-                    \trigger_error('Repository Not Found: ' . $infoReleasesUrl);
-                } elseif (\is_string($curlReturn)) {
-                    $file              = \json_decode($curlReturn, false);
-                    $latestVersionLink = \sprintf("https://github.com/$repository/archive/%s.zip", $file ? \reset($file)->tag_name : $default);
-                    $latestVersion     = $file[0]->tag_name;
-                    $prerelease        = $file[0]->prerelease;
+                    trigger_error(curl_error($curlHandle));
+                } elseif (is_string($curlReturn) && (false !== mb_strpos($curlReturn, 'Not Found'))) {
+                    trigger_error('Repository Not Found: ' . $infoReleasesUrl);
+                } elseif (is_string($curlReturn)) {
+                    $file = json_decode($curlReturn, false);
+                    $latestVersionLink = sprintf("https://github.com/{$repository}/archive/%s.zip", $file ? reset($file)->tag_name : $default);
+                    $latestVersion = $file[0]->tag_name;
+                    $prerelease = $file[0]->prerelease;
                     if ('master' !== $latestVersionLink) {
-                        $update = \constant('CO_' . $moduleDirNameUpper . '_' . 'NEW_VERSION') . $latestVersion;
+                        $update = constant('CO_' . $moduleDirNameUpper . '_' . 'NEW_VERSION') . $latestVersion;
                     }
-                    //"PHP-standardized" version
-                    $latestVersion = \mb_strtolower($latestVersion);
-                    if (false !== \mb_strpos($latestVersion, 'final')) {
-                        $latestVersion = \str_replace('_', '', \mb_strtolower($latestVersion));
-                        $latestVersion = \str_replace('final', '', \mb_strtolower($latestVersion));
+                    // "PHP-standardized" version
+                    $latestVersion = mb_strtolower($latestVersion);
+                    if (false !== mb_strpos($latestVersion, 'final')) {
+                        $latestVersion = str_replace('_', '', mb_strtolower($latestVersion));
+                        $latestVersion = str_replace('final', '', mb_strtolower($latestVersion));
                     }
                     $moduleVersion = ($module->getInfo('version') . '_' . $module->getInfo('module_status'));
-                    //"PHP-standardized" version
-                    $moduleVersion = \str_replace(' ', '', \mb_strtolower($moduleVersion));
+                    // "PHP-standardized" version
+                    $moduleVersion = str_replace(' ', '', mb_strtolower($moduleVersion));
                     //                    $moduleVersion = '1.0'; //for testing only
                     //                    $moduleDirName = 'publisher'; //for testing only
-                    if (!$prerelease && \version_compare($moduleVersion, $latestVersion, '<')) {
-                        $ret   = [];
+                    if (! $prerelease && version_compare($moduleVersion, $latestVersion, '<')) {
+                        $ret = [];
                         $ret[] = $update;
                         $ret[] = $latestVersionLink;
                     }
                 }
-                \curl_close($curlHandle);
+                curl_close($curlHandle);
             }
         }
 

@@ -1,7 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 /**
- * Subscriptions Admin menu
+ * Subscriptions Admin menu.
  *
  * @copyright XOOPS Project (https://xoops.org)
  * @license   GNU GPL 2.0 or later (https://www.gnu.org/licenses/gpl-2.0.html)
@@ -19,7 +21,7 @@ require dirname(__DIR__) . '/preloads/autoloader.php';
 $helper = Helper::getInstance();
 $helper->loadLanguage('admin');
 
-$pathIcon32    = Admin::menuIconPath('');
+$pathIcon32 = Admin::menuIconPath('');
 $pathModIcon32 = $helper->url('assets/images/icons/32/');
 
 $adminmenu[] = ['title' => _AM_SUBSCRIPTIONS_DASHBOARD,     'link' => 'admin/index.php',         'icon' => $pathIcon32 . '/home.png'];
