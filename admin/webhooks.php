@@ -1,16 +1,13 @@
 <?php
+
+declare(strict_types=1);
 /**
- * Subscriptions Admin Webhooks management
- *
- * @package    subscriptions
- * @subpackage admin
+ * Subscriptions Admin Webhooks management.
  */
 
-use XoopsModules\Subscriptions\{
-    Helper,
-    Utility,
-    Webhook
-};
+use XoopsModules\Subscriptions\Helper;
+use XoopsModules\Subscriptions\Utility;
+use XoopsModules\Subscriptions\Webhook;
 
 $op = isset($_REQUEST['op']) ? htmlspecialchars(trim($_REQUEST['op']), ENT_QUOTES) : 'list';
 
@@ -26,7 +23,6 @@ Utility::addAdminAssets();
 
 $helper = Helper::getInstance();
 $helper->loadLanguage('admin');
-
 
 /** @var WebhookHandler $handler */
 $handler = $helper->getHandler('Webhook');
@@ -45,20 +41,20 @@ $allEvents = [
 
 switch ($op) {
     case 'save':
-        if (!Utility::verifyToken($_POST['token'] ?? '', 'admin_webhooks')) {
+        if (! Utility::verifyToken($_POST['token'] ?? '', 'admin_webhooks')) {
             redirect_header('webhooks.php', 2, _NOPERM);
         }
-        $whId   = (int)($_POST['webhook_id'] ?? 0);
-        $wh     = $whId > 0 ? $handler->get($whId) : $handler->create();
-        if (!$wh) {
+        $whId = (int) ($_POST['webhook_id'] ?? 0);
+        $wh = $whId > 0 ? $handler->get($whId) : $handler->create();
+        if (! $wh) {
             redirect_header('webhooks.php', 2, _AM_SUBSCRIPTIONS_WEBHOOK_NOT_FOUND);
         }
-        $selectedEvents = array_values(array_intersect((array)($_POST['events'] ?? []), $allEvents));
-        $wh->setVar('url',        substr(trim($_POST['url'] ?? ''), 0, 500));
-        $wh->setVar('events',     json_encode($selectedEvents));
-        $wh->setVar('is_active',  (int)($_POST['is_active'] ?? 1));
+        $selectedEvents = array_values(array_intersect((array) ($_POST['events'] ?? []), $allEvents));
+        $wh->setVar('url', substr(trim($_POST['url'] ?? ''), 0, 500));
+        $wh->setVar('events', json_encode($selectedEvents));
+        $wh->setVar('is_active', (int) ($_POST['is_active'] ?? 1));
         if ($whId === 0) {
-            $wh->setVar('secret',     bin2hex(random_bytes(32)));
+            $wh->setVar('secret', bin2hex(random_bytes(32)));
             $wh->setVar('last_fired', 0);
             $wh->setVar('fail_count', 0);
             $wh->setVar('created_at', time());
@@ -67,41 +63,42 @@ switch ($op) {
             redirect_header('webhooks.php', 2, _AM_SUBSCRIPTIONS_WEBHOOK_SAVED);
         }
         redirect_header('webhooks.php', 2, _AM_SUBSCRIPTIONS_SAVE_ERROR);
-        break;
 
+        break;
     case 'delete':
-        $whId = (int)($_REQUEST['webhook_id'] ?? 0);
+        $whId = (int) ($_REQUEST['webhook_id'] ?? 0);
         if ($whId > 0 && Utility::verifyToken($_REQUEST['token'] ?? '', 'admin_wh_del_' . $whId)) {
             $handler->delete($handler->get($whId), true);
         }
         redirect_header('webhooks.php', 2, _AM_SUBSCRIPTIONS_WEBHOOK_DELETED);
-        break;
 
+        break;
     case 'edit':
-        $whId = (int)($_REQUEST['webhook_id'] ?? 0);
-        $wh   = $whId > 0 ? $handler->get($whId) : $handler->create();
+        $whId = (int) ($_REQUEST['webhook_id'] ?? 0);
+        $wh = $whId > 0 ? $handler->get($whId) : $handler->create();
         // Decode events JSON in PHP so the template receives a plain array
-        $eventsRaw      = $wh->getVar('events', 'n');
+        $eventsRaw = $wh->getVar('events', 'n');
         $selectedEvents = (is_string($eventsRaw) && $eventsRaw !== '')
             ? (json_decode($eventsRaw, true) ?? [])
             : [];
-        $xoopsTpl->assign('xm_webhook',         Utility::objVars($wh));
+        $xoopsTpl->assign('xm_webhook', Utility::objVars($wh));
         $xoopsTpl->assign('xm_selected_events', $selectedEvents);
-        $xoopsTpl->assign('xm_all_events',      $allEvents);
-        $xoopsTpl->assign('xm_token',           Utility::generateToken('admin_webhooks'));
-        $xoopsTpl->assign('xm_is_edit',         $whId > 0);
-        break;
+        $xoopsTpl->assign('xm_all_events', $allEvents);
+        $xoopsTpl->assign('xm_token', Utility::generateToken('admin_webhooks'));
+        $xoopsTpl->assign('xm_is_edit', $whId > 0);
 
+        break;
     default:
         $webhooks = $handler->getAll();
-        $whData   = [];
+        $whData = [];
         foreach ($webhooks as $w) {
             $whData[] = array_merge(Utility::objVars($w), [
                 'del_token' => Utility::generateToken('admin_wh_del_' . $w->getVar('webhook_id')),
             ]);
         }
-        $xoopsTpl->assign('xm_webhooks',  $whData);
+        $xoopsTpl->assign('xm_webhooks', $whData);
         $xoopsTpl->assign('xm_admin_nav', Utility::adminNav());
+
         break;
 }
 
