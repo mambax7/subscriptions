@@ -1,0 +1,38 @@
+-
+    invoice_id: '1'
+    invoice_number: INV-0001
+    user_id: '1'
+    sub_id: '1'
+    status: paid
+    subtotal: '29.99'
+    tax_rate: '0.00'
+    tax_amount: '0.00'
+    discount_amount: '0.00'
+    total: '29.99'
+    currency: USD
+    due_date: '1704067200'
+    paid_at: '1704067200'
+    period_start: '0'
+    period_end: '0'
+    notes: ''
+    created_at: '1704067200'
+    updated_at: '1704067200'
+-
+    invoice_id: '2'
+    invoice_number: INV-0002
+    user_id: '3'
+    sub_id: '3'
+    status: paid
+    subtotal: '148.99'
+    tax_rate: '0.00'
+    tax_amount: '0.00'
+    discount_amount: '0.00'
+    total: '148.99'
+    currency: USD
+    due_date: '1701388800'
+    paid_at: '1701388800'
+    period_start: '0'
+    period_end: '0'
+    notes: 'Includes setup fee'
+    created_at: '1701388800'
+    updated_at: '1703808000'

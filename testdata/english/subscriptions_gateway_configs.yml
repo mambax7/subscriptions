@@ -1,0 +1,42 @@
+-
+    config_id: '1'
+    gateway: 'paypal'
+    config_key: 'business_email'
+    config_val: 'paypal-demo@example.com'
+    is_active: '1'
+-
+    config_id: '2'
+    gateway: 'paypal'
+    config_key: 'sandbox_mode'
+    config_val: '1'
+    is_active: '1'
+-
+    config_id: '3'
+    gateway: 'paypal'
+    config_key: 'client_id'
+    config_val: 'AX_demo_paypal_client_id_replace_with_real'
+    is_active: '1'
+-
+    config_id: '4'
+    gateway: 'stripe'
+    config_key: 'publishable_key'
+    config_val: 'pk_test_demo_replace_with_real_key'
+    is_active: '1'
+-
+    config_id: '5'
+    gateway: 'stripe'
+    config_key: 'secret_key'
+    config_val: 'sk_test_demo_replace_with_real_key'
+    is_active: '1'
+-
+    config_id: '6'
+    gateway: 'stripe'
+    config_key: 'sandbox_mode'
+    config_val: '1'
+    is_active: '1'
+-
+    config_id: '7'
+    gateway: 'manual'
+    config_key: 'instructions'
+    config_val: 'Please transfer to Bank Account XX-XXXX-XXXXXXX and email your receipt to billing@example.com'
+    is_active: '1'

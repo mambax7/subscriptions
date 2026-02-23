@@ -1,0 +1,96 @@
+-
+    coupon_id: '1'
+    code: WELCOME20
+    name: 'Welcome Discount 20%'
+    discount_type: percentage
+    discount_value: '20.00'
+    min_amount: '0.00'
+    max_uses: '100'
+    uses_count: '12'
+    max_uses_per_user: '1'
+    applies_to: all
+    plan_ids: '[]'
+    valid_from: '1704067200'
+    valid_until: '1767225600'
+    is_active: '1'
+    created_at: '1704067200'
+-
+    coupon_id: '2'
+    code: SAVE10
+    name: 'Save $10 Flat'
+    discount_type: fixed
+    discount_value: '10.00'
+    min_amount: '20.00'
+    max_uses: '50'
+    uses_count: '8'
+    max_uses_per_user: '2'
+    applies_to: all
+    plan_ids: '[]'
+    valid_from: '1704067200'
+    valid_until: '1767225600'
+    is_active: '1'
+    created_at: '1704067200'
+-
+    coupon_id: '3'
+    code: STARTER15
+    name: 'Starter Plan 15% Off'
+    discount_type: percentage
+    discount_value: '15.00'
+    min_amount: '0.00'
+    max_uses: '200'
+    uses_count: '34'
+    max_uses_per_user: '1'
+    applies_to: plan_ids
+    plan_ids: '[1,2]'
+    valid_from: '1704067200'
+    valid_until: '1767225600'
+    is_active: '1'
+    created_at: '1704067200'
+-
+    coupon_id: '4'
+    code: ANNUAL25
+    name: 'Annual Subscription 25% Off'
+    discount_type: percentage
+    discount_value: '25.00'
+    min_amount: '0.00'
+    max_uses: '0'
+    uses_count: '5'
+    max_uses_per_user: '1'
+    applies_to: all
+    plan_ids: '[]'
+    valid_from: '1704067200'
+    valid_until: '1767225600'
+    is_active: '1'
+    created_at: '1704067200'
+-
+    coupon_id: '5'
+    code: BLACKFRIDAY30
+    name: 'Black Friday 30% Off'
+    discount_type: percentage
+    discount_value: '30.00'
+    min_amount: '0.00'
+    max_uses: '500'
+    uses_count: '487'
+    max_uses_per_user: '1'
+    applies_to: all
+    plan_ids: '[]'
+    valid_from: '1700697600'
+    valid_until: '1701388800'
+    is_active: '0'
+    created_at: '1700611200'
+-
+    coupon_id: '6'
+    code: ENTERPRISE50
+    name: 'Enterprise First Month 50% Off'
+    discount_type: percentage
+    discount_value: '50.00'
+    min_amount: '0.00'
+    max_uses: '10'
+    uses_count: '3'
+    max_uses_per_user: '1'
+    applies_to: plan_ids
+    plan_ids: '[5]'
+    valid_from: '1704067200'
+    valid_until: '1767225600'
+    is_active: '1'
+    created_at: '1704067200'

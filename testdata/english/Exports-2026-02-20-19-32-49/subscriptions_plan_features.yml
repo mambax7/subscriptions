@@ -1,0 +1,120 @@
+-
+    feature_id: '1'
+    plan_id: '1'
+    feature: '1 GB Storage'
+    sort_order: '1'
+-
+    feature_id: '2'
+    plan_id: '1'
+    feature: '1 active project'
+    sort_order: '2'
+-
+    feature_id: '3'
+    plan_id: '1'
+    feature: 'Community forum support'
+    sort_order: '3'
+-
+    feature_id: '4'
+    plan_id: '2'
+    feature: '10 GB Storage'
+    sort_order: '1'
+-
+    feature_id: '5'
+    plan_id: '2'
+    feature: 'Up to 5 projects'
+    sort_order: '2'
+-
+    feature_id: '6'
+    plan_id: '2'
+    feature: 'Email support'
+    sort_order: '3'
+-
+    feature_id: '7'
+    plan_id: '2'
+    feature: '1 connected module'
+    sort_order: '4'
+-
+    feature_id: '8'
+    plan_id: '3'
+    feature: '50 GB Storage'
+    sort_order: '1'
+-
+    feature_id: '9'
+    plan_id: '3'
+    feature: 'Unlimited projects'
+    sort_order: '2'
+-
+    feature_id: '10'
+    plan_id: '3'
+    feature: 'Priority email & chat support'
+    sort_order: '3'
+-
+    feature_id: '11'
+    plan_id: '3'
+    feature: 'Advanced analytics'
+    sort_order: '4'
+-
+    feature_id: '12'
+    plan_id: '3'
+    feature: 'Up to 5 connected modules'
+    sort_order: '5'
+-
+    feature_id: '13'
+    plan_id: '4'
+    feature: '200 GB Storage'
+    sort_order: '1'
+-
+    feature_id: '14'
+    plan_id: '4'
+    feature: 'Unlimited projects'
+    sort_order: '2'
+-
+    feature_id: '15'
+    plan_id: '4'
+    feature: 'Priority support with 4-hour SLA'
+    sort_order: '3'
+-
+    feature_id: '16'
+    plan_id: '4'
+    feature: 'Advanced analytics & custom reports'
+    sort_order: '4'
+-
+    feature_id: '17'
+    plan_id: '4'
+    feature: 'Unlimited connected modules'
+    sort_order: '5'
+-
+    feature_id: '18'
+    plan_id: '4'
+    feature: 'SSO / SAML integration'
+    sort_order: '6'
+-
+    feature_id: '19'
+    plan_id: '5'
+    feature: 'Unlimited Storage'
+    sort_order: '1'
+-
+    feature_id: '20'
+    plan_id: '5'
+    feature: 'Unlimited projects'
+    sort_order: '2'
+-
+    feature_id: '21'
+    plan_id: '5'
+    feature: 'Dedicated account manager'
+    sort_order: '3'
+-
+    feature_id: '22'
+    plan_id: '5'
+    feature: '99.9% SLA uptime guarantee'
+    sort_order: '4'
+-
+    feature_id: '23'
+    plan_id: '5'
+    feature: 'Custom integrations & API access'
+    sort_order: '5'
+-
+    feature_id: '24'
+    plan_id: '5'
+    feature: 'White-glove onboarding'
+    sort_order: '6'

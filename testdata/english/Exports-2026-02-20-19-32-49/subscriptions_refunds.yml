@@ -1,0 +1,11 @@
+-
+    refund_id: '1'
+    payment_id: '3'
+    sub_id: '3'
+    user_id: '3'
+    amount: '49.99'
+    reason: 'Setup fee dispute resolved in favour of customer'
+    status: completed
+    gateway_refund_id: re_demo_stripe_001
+    processed_by: '1'
+    created_at: '1703808000'

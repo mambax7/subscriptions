@@ -1,0 +1,22 @@
+-
+    refund_id: '1'
+    payment_id: '13'
+    sub_id: '2'
+    user_id: '2'
+    amount: '89.99'
+    reason: 'Duplicate charge — card charged twice in November billing cycle'
+    status: completed
+    gateway_refund_id: re_demo_stripe_001
+    processed_by: '1'
+    created_at: '1701648000'
+-
+    refund_id: '2'
+    payment_id: '12'
+    sub_id: '5'
+    user_id: '5'
+    amount: '14.99'
+    reason: 'Pro-rated refund upon early cancellation request'
+    status: completed
+    gateway_refund_id: PAYPAL-REFUND-DEMO-002
+    processed_by: '1'
+    created_at: '1705276800'

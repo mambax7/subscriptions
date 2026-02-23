@@ -1,0 +1,24 @@
+# Real Estate & Rentals — SEO-Friendly URLs
+# Enable mod_rewrite in Apache before using these rules
+#
+# Example URLs:
+#   /modules/realestate/property/modern-downtown-luxury-apartment
+#   /modules/realestate/city/new-york
+#   /modules/realestate/type/apartment
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /modules/realestate/
+
+    # Property detail by slug
+    RewriteRule ^property/([a-z0-9\-]+)/?$ property.php?slug=$1 [L,QSA]
+
+    # Filter by city
+    RewriteRule ^city/([^/]+)/?$ index.php?city=$1 [L,QSA]
+
+    # Filter by type
+    RewriteRule ^type/([a-z]+)/?$ index.php?type=$1 [L,QSA]
+
+    # Favorites
+    RewriteRule ^favorites/?$ favorites.php [L,QSA]
+</IfModule>

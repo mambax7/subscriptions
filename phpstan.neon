@@ -1,0 +1,75 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    - phpstan-baseline.neon
+
+parameters:
+    level: 6
+
+    paths:
+        - class
+
+    excludePaths:
+        - vendor
+        - tests
+
+    # XOOPS-specific settings
+    bootstrapFiles:
+        - phpstan-bootstrap.php
+
+    # Treat XOOPS objects as universal crates
+    universalObjectCratesClasses:
+        - XoopsObject
+        - XoopsModule
+        - XoopsUser
+
+    # Ignore XOOPS legacy patterns
+    ignoreErrors:
+        # Global variables from XOOPS core
+        - '#Variable \$xoopsDB might not be defined#'
+        - '#Variable \$xoopsUser might not be defined#'
+        - '#Variable \$xoopsModule might not be defined#'
+        - '#Variable \$xoopsModuleConfig might not be defined#'
+        - '#Variable \$xoopsTpl might not be defined#'
+        - '#Variable \$xoopsSecurity might not be defined#'
+
+        # Legacy handler patterns
+        - '#Call to an undefined method XoopsObjectHandler::#'
+        - '#Call to an undefined method XoopsPersistableObjectHandler::#'
+
+        # XOOPS function return types
+        - '#Function xoops_getHandler has no return type#'
+        - '#Function xoops_getModuleHandler has no return type#'
+
+        # Smarty template assignments can be mixed
+        - '#Cannot access offset .+ on mixed#'
+
+        # Missing generics — legacy XOOPS code
+        -
+            identifier: missingType.generics
+
+        # Strict rules — allow empty() in legacy patterns
+        -
+            identifier: empty.notAllowed
+
+        # XOOPS language constants loaded at runtime
+        - '#Constant _[A-Z_]+ not found#'
+
+        # XOOPS core functions loaded at runtime
+        - '#Function xoops_cp_header not found#'
+        - '#Function xoops_cp_footer not found#'
+
+        # XMF classes — available at runtime via XOOPS autoloader
+        - '#on an unknown class Xmf\\\\#'
+
+    # Type inference helpers
+    typeAliases:
+        XoopsObjectArray: 'array<int, XoopsObject>'
+
+    checkMissingIterableValueType: true
+    reportUnmatchedIgnoredErrors: false
+
+    parallel:
+        maximumNumberOfProcesses: 4
+
+    phpVersion: 70400

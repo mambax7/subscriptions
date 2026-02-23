@@ -1,0 +1,9 @@
+-
+    webhook_id: '1'
+    url: 'https://example.com/hooks/subscriptions'
+    events: '["subscription.created","subscription.cancelled","payment.completed"]'
+    secret: demo_secret_key_replace_before_use_abc123xyz
+    is_active: '1'
+    last_fired: '0'
+    fail_count: '0'
+    created_at: '1704067200'

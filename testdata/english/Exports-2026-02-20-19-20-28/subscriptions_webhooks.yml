@@ -1,0 +1,18 @@
+-
+    webhook_id: '1'
+    url: 'https://example.com/hooks/subscriptions'
+    events: '["subscription.created","subscription.cancelled","payment.completed"]'
+    secret: demo_secret_key_replace_before_use_abc123xyz
+    is_active: '1'
+    last_fired: '0'
+    fail_count: '0'
+    created_at: '1704067200'
+-
+    webhook_id: '2'
+    url: ''
+    events: '["subscription.created","subscription.renewed","subscription.cancelled","subscription.expired","payment.completed","payment.failed","refund.completed","trial.started","trial.ending"]'
+    secret: 5cb24634d0aabf59d83939fbb46027c19b86fe752cbca1e32c68a19beda18412
+    is_active: '1'
+    last_fired: '0'
+    fail_count: '0'
+    created_at: '1771614514'

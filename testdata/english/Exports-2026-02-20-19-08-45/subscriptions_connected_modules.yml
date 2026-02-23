@@ -1,0 +1,11 @@
+-
+    module_id: '1'
+    dirname: publisher
+    name: Publisher
+    description: ''
+    owner_uid: '0'
+    is_active: '1'
+    webhook_url: ''
+    api_key: demo_api_key_publisher_subscriptions_replace_me
+    config: ''
+    created_at: '1704067200'

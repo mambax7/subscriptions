@@ -1,0 +1,12 @@
+-
+    usage_id: '1'
+    coupon_id: '1'
+    user_id: '2'
+    sub_id: '2'
+    used_at: '1704067200'
+-
+    usage_id: '2'
+    coupon_id: '1'
+    user_id: '3'
+    sub_id: '3'
+    used_at: '1701388800'

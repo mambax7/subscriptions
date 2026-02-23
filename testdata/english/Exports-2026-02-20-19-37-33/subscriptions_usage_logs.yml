@@ -1,0 +1,80 @@
+-
+    log_id: '1'
+    sub_id: '1'
+    user_id: '1'
+    module_id: '2'
+    event_type: download
+    quantity: '1.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1706832000'
+-
+    log_id: '2'
+    sub_id: '1'
+    user_id: '1'
+    module_id: '2'
+    event_type: download
+    quantity: '1.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1706918400'
+-
+    log_id: '3'
+    sub_id: '1'
+    user_id: '1'
+    module_id: '2'
+    event_type: download
+    quantity: '1.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1707004800'
+-
+    log_id: '4'
+    sub_id: '4'
+    user_id: '4'
+    module_id: '1'
+    event_type: visit
+    quantity: '1.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1706832000'
+-
+    log_id: '5'
+    sub_id: '4'
+    user_id: '4'
+    module_id: '3'
+    event_type: download
+    quantity: '5.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1706918400'
+-
+    log_id: '6'
+    sub_id: '2'
+    user_id: '2'
+    module_id: '1'
+    event_type: visit
+    quantity: '1.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1706832000'
+-
+    log_id: '7'
+    sub_id: '2'
+    user_id: '2'
+    module_id: '2'
+    event_type: download
+    quantity: '1.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1706832000'
+-
+    log_id: '8'
+    sub_id: '2'
+    user_id: '2'
+    module_id: '3'
+    event_type: download
+    quantity: '3.00'
+    unit_price: '0.000000'
+    billed: '0'
+    created_at: '1707004800'

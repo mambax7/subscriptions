@@ -1,0 +1,120 @@
+-
+    plan_id: '1'
+    name: Starter
+    slug: starter
+    description: '<p>Perfect for individuals and hobbyists. Access to core features with generous free-tier limits.</p>'
+    price: '4.99'
+    currency: USD
+    billing_cycle: monthly
+    trial_days: '7'
+    setup_fee: '0.00'
+    discount_annual: '10.00'
+    pricing_model: flat
+    usage_unit: ''
+    usage_price: '0.000000'
+    is_featured: '0'
+    is_active: '1'
+    sort_order: '1'
+    max_users: '1'
+    created_at: '1704067200'
+    updated_at: '1704067200'
+-
+    plan_id: '2'
+    name: Basic
+    slug: basic
+    description: '<p>Great for freelancers and small teams. Solid storage, essential integrations, and email support.</p>'
+    price: '9.99'
+    currency: USD
+    billing_cycle: monthly
+    trial_days: '7'
+    setup_fee: '0.00'
+    discount_annual: '10.00'
+    pricing_model: flat
+    usage_unit: ''
+    usage_price: '0.000000'
+    is_featured: '0'
+    is_active: '1'
+    sort_order: '2'
+    max_users: '3'
+    created_at: '1704067200'
+    updated_at: '1704067200'
+-
+    plan_id: '3'
+    name: Professional
+    slug: professional
+    description: '<p>Designed for growing teams. More storage, more API calls, priority support included.</p>'
+    price: '29.99'
+    currency: USD
+    billing_cycle: monthly
+    trial_days: '14'
+    setup_fee: '0.00'
+    discount_annual: '15.00'
+    pricing_model: flat
+    usage_unit: ''
+    usage_price: '0.000000'
+    is_featured: '1'
+    is_active: '1'
+    sort_order: '3'
+    max_users: '10'
+    created_at: '1704067200'
+    updated_at: '1704067200'
+-
+    plan_id: '4'
+    name: Business
+    slug: business
+    description: '<p>Built for established businesses. SSO, advanced reporting, and dedicated onboarding support.</p>'
+    price: '59.99'
+    currency: USD
+    billing_cycle: monthly
+    trial_days: '14'
+    setup_fee: '0.00'
+    discount_annual: '20.00'
+    pricing_model: flat
+    usage_unit: ''
+    usage_price: '0.000000'
+    is_featured: '0'
+    is_active: '1'
+    sort_order: '4'
+    max_users: '25'
+    created_at: '1704067200'
+    updated_at: '1704067200'
+-
+    plan_id: '5'
+    name: Enterprise
+    slug: enterprise
+    description: '<p>Unlimited everything. Dedicated support, SLA guarantee, custom integrations, and white-glove onboarding.</p>'
+    price: '99.99'
+    currency: USD
+    billing_cycle: monthly
+    trial_days: '0'
+    setup_fee: '49.00'
+    discount_annual: '20.00'
+    pricing_model: flat
+    usage_unit: ''
+    usage_price: '0.000000'
+    is_featured: '0'
+    is_active: '1'
+    sort_order: '5'
+    max_users: '0'
+    created_at: '1704067200'
+    updated_at: '1704067200'
+-
+    plan_id: '6'
+    name: 'Legacy Basic (discontinued)'
+    slug: legacy-basic
+    description: '<p>Discontinued plan — existing subscribers grandfathered in at the original price.</p>'
+    price: '7.99'
+    currency: USD
+    billing_cycle: monthly
+    trial_days: '0'
+    setup_fee: '0.00'
+    discount_annual: '0.00'
+    pricing_model: flat
+    usage_unit: ''
+    usage_price: '0.000000'
+    is_featured: '0'
+    is_active: '0'
+    sort_order: '99'
+    max_users: '5'
+    created_at: '1672531200'
+    updated_at: '1704067200'
